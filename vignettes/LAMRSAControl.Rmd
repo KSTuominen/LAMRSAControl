@@ -1,0 +1,201 @@
+---
+title: "LAMRSAControl"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{LAMRSAControl}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Install/load the library
+If not already done, you must first install the
+'LAMRSAControl' library and its dependencies. The instructions to
+build an install of the package are located in the 'Makefile' in the
+root of the package. After installing you can load the package:
+
+```{r warning = FALSE, message = FALSE}
+library(LAMRSAControl)
+```
+
+To ensure this script is reproducible, we can set the seed and
+restrict the number of threads that SimInf uses to 1:
+
+```{r, warning = FALSE, message = FALSE}
+set.seed(9000)
+set_num_threads(1)
+```
+
+## Brief model description
+This stochastic compartment model consists of a farrow-to-finish pig
+farm with default animal movements based on Swedish pig farming
+practices. After the burn-in period, the model consists of
+approximately 500 sows in production and their offsprings. The model
+animal flow is described in detail in Tuominen et al. (2022).
+
+The model compartments, propensity functions and other model
+parameters are created in `R/initialize_model.R`. The model consists of
+5 different pig categories: sows, gilts, piglets, growing and
+finishing pigs. These categories have their own susceptible and
+infected compartments (S, I1). The disease recovery has been
+implemented using Erlang distribution, where the recovery occurs
+through additional infected compartments (I2, I3) before the animals
+may return to back to susceptible compartment.
+
+The basic unit in the model is `node`, which is a representative of a
+pen. In the model results (structured as data frame), each row
+presents the status of a node on a particular time point. Each node
+has a designated `pentype`, which describes which unit the pen belongs
+to. Nodes can have pigs from different compartments and the counts of
+animals in each compartment in each node is updated when the model
+time processes one day. Similarly, the environmental infectious
+pressure for within-pen, between-pen and between-room transmission for each node are
+presented in the `phi`, `s_phi` and `f_phi` columns, respectively.
+
+## Initialise the model
+For quick processing time, let's use one of the pre-generated model
+events and the `interventions()` -function to run a model
+trajectory. This function automatically infects 20% of the gilts in
+the gilt growing unit when the model has reached its steady state
+after the burn-in period (day 730). The function also allows testing
+some individual control measures against the disease spread. The following 
+example of runs only the baseline configuration of model with no control
+measures but infects 20% of the growing gilts.
+
+```{r, warning = FALSE}
+data("events")
+basemodel <- interventions(events = events, intervention ="basemodel")
+result_basemodel <- run(basemodel)
+```
+
+The results of the model object can be formatted into a data frame format as follows:
+
+```{r, warning = FALSE}
+final_result <- trajectory(result_basemodel)
+```
+The state of the herd on a given `timepoint` can be visualized as shown below. In the image each node is represented as a square and the dots inside are pigs in the nodes (pens). The blue dots represent susceptible individuals and red dots the infected individuals. Additionally the square background changes from white to red depending on the environmental infectious pressure in the node. An example of code for producing series of images and combining them into a video is available in `inst/herd_animation.R`.
+
+```{r, warning = FALSE, fig.dim = c(10, 4)}
+timepoint <- 1000
+plot(x = clean_trajectory(final_result[final_result$time == timepoint, ]))
+```
+
+Alternatively, the whole herd prevalence can be summarised by using
+SimInf's prevalence function. The first example takes the prevalence
+of all compartments in the herd and second one only the animals
+belonging to the piglet compartments.
+
+```{r, warning = FALSE}
+herd_prevalence <- prevalence(result_basemodel,
+                              Isows1+Isows2+Isows3+
+                              Igilts1+Igilts2+Igilts3+
+                              Ipiglets1+Ipiglets2+Ipiglets3+
+                              Igrowers1+Igrowers2+Igrowers3+
+                              Ifinish1+Ifinish2+Ifinish3~
+                                  Ssows+Sgilts+Spiglets+Sgrowers+Sfinish+
+                                  Isows1+Isows2+Isows3+
+                                  Igilts1+Igilts2+Igilts3+
+                                  Ipiglets1+Ipiglets2+Ipiglets3+
+                                  Igrowers1+Igrowers2+Igrowers3+
+                                  Ifinish1+Ifinish2+Ifinish3)
+
+piglet_prevalence <- prevalence(result_basemodel,
+                                Ipiglets1+Ipiglets2+Ipiglets3~
+                                    Spiglets+Ipiglets1+Ipiglets2+Ipiglets3)
+```
+
+These results can be plotted as follows (excluding the model burn-in
+period before herd has reached steady state)
+
+```{r, warning = FALSE}
+plot(herd_prevalence, type = "l", xlim= c(731, 3000), ylim = c(0, 1))
+plot(piglet_prevalence, type = "l", xlim= c(731, 3000), ylim = c(0, 1))
+```
+
+Let's try one of the control measure options in the `interventions()`
+-function and plot the whole herd prevalence of the result. This control measure
+cleans all the all-in all-out pens (=removes the environmental
+infectious pressure from these nodes) when the nodes become empty of
+animals.
+
+```{r, warning = FALSE}
+data("events")
+model_AIAO <- interventions(events = events, intervention ="cleaning", clean_AIAO = 0)
+result_AIAO <- run(model_AIAO)
+
+herd_prevalence_clean <- prevalence(result_AIAO,
+                              Isows1+Isows2+Isows3+
+                                  Igilts1+Igilts2+Igilts3+
+                                  Ipiglets1+Ipiglets2+Ipiglets3+
+                                  Igrowers1+Igrowers2+Igrowers3+
+                                  Ifinish1+Ifinish2+Ifinish3~
+                                  Ssows+Sgilts+Spiglets+Sgrowers+Sfinish+
+                                  Isows1+Isows2+Isows3+
+                                  Igilts1+Igilts2+Igilts3+
+                                  Ipiglets1+Ipiglets2+Ipiglets3+
+                                  Igrowers1+Igrowers2+Igrowers3+
+                                  Ifinish1+Ifinish2+Ifinish3)
+
+plot(herd_prevalence_clean, type = "l", xlim= c(731, 3000), ylim = c(0, 1))
+```
+
+## Approximate Bayesian computation (ABC)
+
+To parameterise the LA-MRSA transmission rates for the model, ABC (available in the SimInf package) was run using the following code and functions from this package. As running the parameterisation is a long process, the following code is not executed in this vignette.
+
+```{r, eval = FALSE}
+library(SimInf)
+library(LAMRSAControl)
+model <- MRSA_model_4_parameter()
+data(events)
+model@events <- SimInf_events(model@events@E, model@events@N, events = events[events$time < 731,])
+model@tspan <- as.double(1:730)
+result <- trajectory(run(model))
+result <- clean_trajectory(result[result$time == 730, ])
+
+## infect 20% of gilts, however we infected all at d730 in previous paper
+inf_events <- infect_pigs(result, pentype = "Gilt growing", time = 731, proportion = 0.2)
+
+## model with infected animals from day 730
+model <- MRSA_model_4_parameter()
+model@events <- SimInf_events(model@events@E, model@events@N, events = rbind(events[events$time >= 731,], inf_events))
+model@tspan <- as.double(731:3000)
+model@u0 <- as_u_matrix(result)
+(seed <- as.integer(runif(n = 1, min = 0, max = .Machine$integer.max)))
+set.seed(seed)
+fit <- abc(model,
+           priors = c(beta_phi_mature ~ uniform(0, 0.01),
+                      beta_phi_piglets ~ uniform(0, 0.01),
+                      beta_phi_growers ~ uniform(0, 0.01),
+                      beta_phi_finish ~ uniform(0, 0.01)),
+           npart = 200,
+           ninit = 40000,
+           distance = MRSA_distance,
+           expected = MRSA_expected(),
+           verbose = TRUE,
+           post_gen = function(x) {
+               saveRDS(x, file = paste0("gen-", n_generations(x), ".rds"))
+           })
+save(fit, file = "model_fit_4_parameter.Rda")
+```
+
+### The model fit obtained from ABC
+The final generation of the ABC code above returns a fit object, which is part of the package (`model_fit_4_parameter.Rda`). The fitted parameters can be visualized as seen below. In this plot, we can see the distributions of the accepted particles of each individual transmission rates and the ranges of the rates. Additionally, the rates are presented pair-wise as scatter plots.
+
+```{r message=FALSE, warning=FALSE, fig.dim = c(6, 6)}
+load(system.file("model_fit_4_parameter.Rda", package = "LAMRSAControl"))
+plot(fit)
+```
+
+## References
+Tuominen, K.S., Sternberg Lewerin, S., Jacobson, M., Rosendal,
+T., 2022. Modelling environmentally mediated spread of
+livestock-associated methicillin-resistant Staphylococcus aureus in a
+pig herd. Animal
+16, 100450. doi:https://doi.org/10.1016/j.animal.2021.100450.

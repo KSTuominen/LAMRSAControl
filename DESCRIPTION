@@ -1,0 +1,56 @@
+Package: LAMRSAControl
+Title: Control measures against LA-MRSA in a pig herd
+Version: 1.0
+Authors@R:
+    c(person(given = "Krista", family = "Tuominen", email = "krista.tuominen@slu.se", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0002-2223-9376")),
+    person(given = "Thomas", family = "Rosendal", email = "thomas.rosendal@sva.se", role = c("aut"),
+           comment = c(ORCID = "0000-0002-6576-9668")),
+    person(given  = "Stefan", family = "Widgren", email= "stefan.widgren@sva.se", role = c("ctb"),
+           comment = c(ORCID = "0000-0001-5745-2284")))
+Description: Disease spread model of a farrow-to-finish pig herd for studying the spread of LA-MRSA and various control measures.
+            The model uses SimInf, event-based stochastic modelling framework.
+License: GPL-3
+Type: Package
+Depends: R(>= 4.0),
+         SimInf,
+         sp
+Collate:
+    'events.R'
+    'ldata.R'
+    'u0.R'
+    'finishing_slaughter.R'
+    'timers.R'
+    'initialize_model.R'
+    'initialize_herd.R'
+    'gilts_to_slaughter.R'
+    'piglet_mortality.R'
+    'mixing.R'
+    'gilt_to_gestation.R'
+    'sow_to_gestation.R'
+    'farrowing.R'
+    'weaning.R'
+    'abortion.R'
+    'growing_to_finishing.R'
+    'growing_buffer_to_finishing.R'
+    'pregnancy.R'
+    'buffer_culling.R'
+    'sectioning.R'
+    'daily.R'
+    'shift_select.R'
+    'infect_pigs.R'
+    'gen_tests.R'
+    'clean_cf.R'
+    'accept.R'
+    'farm_image.R'
+    'interventions.R'
+    'model_4_parameter.R'
+    'data.R'
+Encoding: UTF-8
+RoxygenNote: 7.2.1
+LazyData: true
+LazyDataCompression: xz
+Suggests:
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
