@@ -262,7 +262,10 @@ plot.MRSA_single_step_trajectory <- function(x,
 ##' plot.MRSA_trajectory
 ##'
 ##' @param x a cleaned model trajectory. Something like the result of 'clean_trajectory(trajectory(run(model)))'
+##' @param tspan the days you want to plot
+##' @param path The path to write the files to
 ##' @param ... Other arguments
+##' @importFrom grDevices dev.off png
 ##' @method plot MRSA_trajectory
 ##' @examples
 ##' \dontrun{
@@ -289,7 +292,7 @@ plot.MRSA_trajectory <- function(x,
     for(time in tspan) {
         file_path <- file.path(path, sprintf("plots/plot%05d.png", time))
         png(file_path, width = 1200, height = 500)
-        plot(clean_trajectory(result[result$time == time, ]), ...)
+        plot(clean_trajectory(x[x$time == time, ]), ...)
         dev.off()
     }
 }

@@ -9,6 +9,10 @@
 \arguments{
 \item{x}{a cleaned model trajectory. Something like the result of 'clean_trajectory(trajectory(run(model)))'}
 
+\item{tspan}{the days you want to plot}
+
+\item{path}{The path to write the files to}
+
 \item{...}{Other arguments}
 }
 \value{
