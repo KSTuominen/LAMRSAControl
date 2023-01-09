@@ -37,4 +37,9 @@ check_full: clean
 	cd .. && R CMD build $(PKG_NAME) --compact-vignettes
 	cd .. && R CMD check $(PKG_TAR) --as-cran
 
+# Build vignette
+vignette:
+	mkdir -p inst/doc
+	cd vignettes && Rscript -e "rmarkdown::render(input = 'LAMRSAControl.Rmd', output_file = '../inst/doc/LAMRSAControl.html')"
+
 .PHONY: install install_full roxygen pdf check build check_full clean
