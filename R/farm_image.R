@@ -219,6 +219,7 @@ plot.MRSA_single_step_trajectory <- function(x,
                                              ...) {
 
     stopifnot(length(col) == length(breaks) + 1)
+    time <- x$time[1]
     x <- farm_polygons(x)
 
     x@data$phi_cat <- as.numeric(as.character(cut(x@data$phi,
@@ -226,7 +227,7 @@ plot.MRSA_single_step_trajectory <- function(x,
                                               include.lowest = TRUE,
                                               labels = seq_len(length(breaks) - 1))))
     x@data$phi_col <- col[x@data$phi_cat]
-    plot(x, col = x$phi_col, xlim = xlim, main = paste(x$time, "days"))
+    plot(x, col = x$phi_col, xlim = xlim, main = paste(time, "days"))
     text(-2, 0.5,  adj = c(1,0), "Sow breeding")
     text(-2, 4,  adj = c(1,0), "Gilt breeding")
     text(-2, 7, adj = c(1,0), "Sow gestation")
@@ -255,5 +256,43 @@ plot.MRSA_single_step_trajectory <- function(x,
              pch = 20,
              cex = 1,
              col = "#FF0000FF")
+    }
+}
+
+##' plot.MRSA_trajectory
+##'
+##' @param x a cleaned model trajectory. Something like the result of 'clean_trajectory(trajectory(run(model)))'
+##' @param tspan the days you want to plot
+##' @param path The path to write the files to
+##' @param ... Other arguments
+##' @importFrom grDevices dev.off png
+##' @method plot MRSA_trajectory
+##' @examples
+##' \dontrun{
+##' library(LAMRSAControl)
+##' model <- MRSA_model_4_parameter()
+##' data(events)
+##' model@events <- SimInf_events(model@events@E, model@events@N, events = events[events$time < 731,])
+##' model@tspan <- as.double(1:730)
+##' result <- clean_trajectory(trajectory(run(model)))
+##' dir.create("movie")
+##' plot(result, tspan = 600:605, path = "movie")
+##'
+##' ## You may now take these files and create a movie. If you have
+##' ## ffmpeg on your machine you can do that like this:
+##' ##     ## Combining a series of generated images into a video:
+##' system("ffmpeg -start_number 600 -i movie/plots/plot%05d.png -r 10 -c:v libx264 -strict -2 -preset veryslow -pix_fmt yuv420p -vf scale=trunc\\(iw/2\\)*2:trunc\\(ih/2\\)*2 -f mp4 farm-indirect.mp4")
+##' }
+##' @return A series of plots
+##' @export
+plot.MRSA_trajectory <- function(x,
+                                 tspan = 1:5,
+                                 path = tempdir(), ...) {
+    dir.create(file.path(path, "plots"))
+    for(time in tspan) {
+        file_path <- file.path(path, sprintf("plots/plot%05d.png", time))
+        png(file_path, width = 1200, height = 500)
+        plot(clean_trajectory(x[x$time == time, ]), ...)
+        dev.off()
     }
 }
