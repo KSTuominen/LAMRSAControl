@@ -64,7 +64,7 @@ events and the `interventions()` -function to run a model
 trajectory. This function automatically infects 20% of the gilts in
 the gilt growing unit when the model has reached its steady state
 after the burn-in period (day 730). The function also allows testing
-some individual control measures against the disease spread. The following 
+some individual control measures against the disease spread. The following
 example of runs only the baseline configuration of model with no control
 measures but infects 20% of the growing gilts.
 
@@ -79,7 +79,14 @@ The results of the model object can be formatted into a data frame format as fol
 ```{r, warning = FALSE}
 final_result <- trajectory(result_basemodel)
 ```
-The state of the herd on a given `timepoint` can be visualized as shown below. In the image each node is represented as a square and the dots inside are pigs in the nodes (pens). The blue dots represent susceptible individuals and red dots the infected individuals. Additionally the square background changes from white to red depending on the environmental infectious pressure in the node. An example of code for producing series of images and combining them into a video is available in `inst/herd_animation.R`.
+The state of the herd on a given `timepoint` can be visualized as
+shown below. In the image each node is represented as a square and the
+dots inside are pigs in the nodes (pens). The blue dots represent
+susceptible individuals and red dots the infected
+individuals. Additionally the square background changes from white to
+red depending on the environmental infectious pressure in the node. An
+example of producing a series of images and combining them into a video
+is available in the `plot` function for object with class: `MRSA_trajectory`.
 
 ```{r, warning = FALSE, fig.dim = c(10, 4)}
 timepoint <- 1000
