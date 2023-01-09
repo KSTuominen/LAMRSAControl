@@ -219,6 +219,7 @@ plot.MRSA_single_step_trajectory <- function(x,
                                              ...) {
 
     stopifnot(length(col) == length(breaks) + 1)
+    time <- x$time[1]
     x <- farm_polygons(x)
 
     x@data$phi_cat <- as.numeric(as.character(cut(x@data$phi,
@@ -226,7 +227,7 @@ plot.MRSA_single_step_trajectory <- function(x,
                                               include.lowest = TRUE,
                                               labels = seq_len(length(breaks) - 1))))
     x@data$phi_col <- col[x@data$phi_cat]
-    plot(x, col = x$phi_col, xlim = xlim, main = paste(x$time, "days"))
+    plot(x, col = x$phi_col, xlim = xlim, main = paste(time, "days"))
     text(-2, 0.5,  adj = c(1,0), "Sow breeding")
     text(-2, 4,  adj = c(1,0), "Gilt breeding")
     text(-2, 7, adj = c(1,0), "Sow gestation")
