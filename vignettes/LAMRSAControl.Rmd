@@ -193,10 +193,10 @@ save(fit, file = "model_fit_4_parameter.Rda")
 ```
 
 ### The model fit obtained from ABC
-The final generation of the ABC code above returns a fit object, which is part of the package (`model_fit_4_parameter.Rda`). The fitted parameters can be visualized as seen below. In this plot, we can see the distributions of the accepted particles of each individual transmission rates and the ranges of the rates. Additionally, the rates are presented pair-wise as scatter plots.
+The final generation of the ABC code above returns a fit object, which is part of the package (`data/fit.Rda`). The fitted parameters can be visualized as seen below. In this plot, we can see the distributions of the accepted particles of each individual transmission rates and the ranges of the rates. Additionally, the rates are presented pair-wise as scatter plots.
 
 ```{r message=FALSE, warning=FALSE, fig.dim = c(6, 6)}
-load(system.file("model_fit_4_parameter.Rda", package = "LAMRSAControl"))
+data("fit")
 plot(fit)
 ```
 
