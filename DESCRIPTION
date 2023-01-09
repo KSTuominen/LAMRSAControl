@@ -47,7 +47,7 @@ Collate:
     'model_4_parameter.R'
     'data.R'
 Encoding: UTF-8
-RoxygenNote: 7.2.1
+RoxygenNote: 7.2.3
 LazyData: true
 LazyDataCompression: xz
 Suggests:
