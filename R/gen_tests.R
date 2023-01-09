@@ -60,7 +60,7 @@ gen_tests <- function(events,
 
     if (gilts) {
         ## the nodes of gilt growing pens
-        gpens <- which(u0()$pentype == "Gilt growing")
+        gpens <- which(create_u0()$pentype == "Gilt growing")
 
         ## pick the events where gilts are moved to breeding
         gg <- events[events$event == "extTrans" & events$select == "2" & events$shift == "0" & events$node %in% gpens, ]

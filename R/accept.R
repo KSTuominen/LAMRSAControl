@@ -142,10 +142,10 @@ MRSA_distance <- function(result, expected, ...) {
     events <- as.data.frame(result@events)
 
     ## collect nodes
-    farr_pens <- which(u0()$pentype == "Farrowing")
-    growing_pens <- which(u0()$pentype == "Growing") ## buffer pens excluded
-    finishing_pens <- which(u0()$pentype == "Finishing")
-    gilt_pens <- which(u0()$pentype == "Gilt growing")
+    farr_pens <- which(create_u0()$pentype == "Farrowing")
+    growing_pens <- which(create_u0()$pentype == "Growing") ## buffer pens excluded
+    finishing_pens <- which(create_u0()$pentype == "Finishing")
+    gilt_pens <- which(create_u0()$pentype == "Gilt growing")
 
     farrowing <- events[events$event == "extTrans" &
                         (events$select == 1 | events$select == 2) &

@@ -1,7 +1,7 @@
 library(LAMRSAControl)
 
 ## Timers set to 14
-result <- u0(node = TRUE, time = TRUE, npigs = TRUE)
+result <- create_u0(node = TRUE, time = TRUE, npigs = TRUE)
 
 result[result$pentype == "Gilt growing", "countdown"][1] <- 0
 result[result$pentype == "Gilt growing", "Sgilts"][1] <- 8

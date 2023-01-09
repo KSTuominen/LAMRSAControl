@@ -1,6 +1,6 @@
 library(LAMRSAControl)
 
-result <- u0(node = TRUE, time = TRUE, npigs = TRUE)
+result <- create_u0(node = TRUE, time = TRUE, npigs = TRUE)
 result[result$pentype == "Sow gestation", "countdown"][1:2] <- 0
 result[result$pentype == "Sow gestation", "Ssows"][1:2] <- 10
 result[result$pentype == "Sow gestation", "npigs"][1:2] <- 10
@@ -33,7 +33,7 @@ ex <- data.frame(event = factor(c(rep(1L, 20), rep(2L, 20)), labels = c("extTran
 stopifnot(identical(ob, ex))
 
 ## gilts farrow
-result <- u0(node = TRUE, time = TRUE, npigs = TRUE)
+result <- create_u0(node = TRUE, time = TRUE, npigs = TRUE)
 result[result$pentype == "Gilt gestation", "countdown"][1:2] <- 0
 result[result$pentype == "Gilt gestation", "Ssows"][1:2] <- 10
 result[result$pentype == "Gilt gestation", "npigs"][1:2] <- 10

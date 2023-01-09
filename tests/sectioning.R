@@ -1,7 +1,7 @@
 library(LAMRSAControl)
 
 ## Timers set to 14
-result <- u0(node = TRUE, time = TRUE, npigs = TRUE)
+result <- create_u0(node = TRUE, time = TRUE, npigs = TRUE)
 
 result[result$pentype == "Gilt breeding", "countdown"][1] <- 0
 result[result$pentype == "Gilt breeding", "Sgilts"][1] <- 8
@@ -31,7 +31,7 @@ stopifnot(identical(sectioning(result, "Farrowing", 75), integer(0)))
 stopifnot(length(sectioning(result, "Farrowing", 0)) == 156)
 
 ## What happens when the finisher barn is full?
-result <- u0(node = TRUE, time = TRUE, npigs = TRUE)
+result <- create_u0(node = TRUE, time = TRUE, npigs = TRUE)
 ## add some grower pigs
 result[result$pentype == "Growing", "countdown"][1:26] <- 0
 result[result$pentype == "Growing", "Sgrowers"][1:26] <- 12

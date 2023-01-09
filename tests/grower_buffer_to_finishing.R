@@ -1,6 +1,6 @@
 library(LAMRSAControl)
 
-result <- u0(node = TRUE, time = TRUE, npigs = TRUE)
+result <- create_u0(node = TRUE, time = TRUE, npigs = TRUE)
 
 ## add some grower pigs
 result[result$pentype == "Growing buffer", "countdown"][1:3] <- 0

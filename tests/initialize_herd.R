@@ -1,5 +1,5 @@
 library(LAMRSAControl)
-result <- u0(node = TRUE, time = TRUE, npigs = TRUE)
+result <- create_u0(node = TRUE, time = TRUE, npigs = TRUE)
 
 ## Test 1
 ## Check to make sure gilts are added the day is 8

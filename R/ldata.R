@@ -5,7 +5,7 @@
 #'
 #' @return data.frame
 ldata <- function() {
-    df <- u0(node = TRUE)
+    df <- create_u0(node = TRUE)
 
     ## These pen types are grouped into the same sections:
     unit <- factor(df$pentype,

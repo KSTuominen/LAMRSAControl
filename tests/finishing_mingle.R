@@ -1,5 +1,5 @@
 library(LAMRSAControl)
-result <- u0(node = TRUE, time = TRUE, npigs = TRUE, test_indicator = TRUE, result_indicator = TRUE, cleaning_indicator = TRUE, Icum = TRUE)
+result <- create_u0(node = TRUE, time = TRUE, npigs = TRUE, test_indicator = TRUE, result_indicator = TRUE, cleaning_indicator = TRUE, Icum = TRUE)
 
 ## set up a finisher section that will be mixed
 result[result$pentype == "Finishing", "countdown"][1:20] <- 98

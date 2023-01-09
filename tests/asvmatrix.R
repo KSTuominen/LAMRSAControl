@@ -1,6 +1,6 @@
 library(LAMRSAControl)
 
-result <- u0(node = TRUE,
+result <- create_u0(node = TRUE,
              time = TRUE,
              capacity = TRUE,
              npigs = TRUE,

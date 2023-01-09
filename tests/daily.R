@@ -1,6 +1,6 @@
 library(LAMRSAControl)
 model <- MRSA_model()
-result <- u0(node = TRUE,
+result <- create_u0(node = TRUE,
              time = TRUE,
              phi = TRUE,
              s_phi = TRUE,
@@ -24,4 +24,3 @@ for(tspan in 1:100) {
 
 ## Are some events generated?
 stopifnot(length(unique(events$time)) > 10)
-

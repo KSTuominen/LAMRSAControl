@@ -1,6 +1,6 @@
 library(LAMRSAControl)
 
-result <- u0(node = TRUE, time = TRUE)
+result <- create_u0(node = TRUE, time = TRUE)
 result[result$pentype == "Sow breeding buffer", "countdown"][c(1,2)] <- 0
 residual <- result[result$pentype == "Sow breeding buffer" & result$countdown == 0, ]
 
@@ -16,7 +16,7 @@ ex <- data.frame(event = factor(c(1L, 1L), labels = c("exit")),
 stopifnot(identical(ob, ex))
 
 ## try with gilts
-result <- u0(node = TRUE, time = TRUE)
+result <- create_u0(node = TRUE, time = TRUE)
 result[result$pentype == "Gilt breeding buffer", "countdown"][c(1,2)] <- 0
 residual <- result[result$pentype == "Gilt breeding buffer" & result$countdown == 0, ]
 

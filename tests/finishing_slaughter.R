@@ -1,7 +1,7 @@
 library(LAMRSAControl)
 
 ## Timers set to 14
-result <- u0(node = TRUE, time = TRUE, npigs = TRUE)
+result <- create_u0(node = TRUE, time = TRUE, npigs = TRUE)
 
 result[result$pentype == "Finishing", "countdown"][c(1,2)] <- 14
 result[result$pentype == "Finishing", "Sfinish"][1] <- 8
@@ -16,7 +16,7 @@ stopifnot(nrow(ob) == 30L)
 stopifnot(ob$proportion == 1/3)
 
 ## Timers set to 7
-result <- u0(node = TRUE, time = TRUE, npigs = TRUE)
+result <- create_u0(node = TRUE, time = TRUE, npigs = TRUE)
 
 result[result$pentype == "Finishing", "countdown"][c(1,2)] <- 7
 result[result$pentype == "Finishing", "Sfinish"][1] <- 8
@@ -31,7 +31,7 @@ stopifnot(nrow(ob) == 30L)
 stopifnot(ob$proportion == 1/2)
 
 ## Timers set to 0
-result <- u0(node = TRUE, time = TRUE, npigs = TRUE)
+result <- create_u0(node = TRUE, time = TRUE, npigs = TRUE)
 
 result[result$pentype == "Finishing", "countdown"][c(1,2)] <- 0
 result[result$pentype == "Finishing", "Sfinish"][1] <- 8
@@ -49,7 +49,7 @@ stopifnot(nrow(ob) == 30L)
 stopifnot(ob$proportion == 1)
 
 ## See that animals are not slaughtered when timer is not 14, 7, or  0
-result <- u0(node = TRUE, time = TRUE, npigs = TRUE)
+result <- create_u0(node = TRUE, time = TRUE, npigs = TRUE)
 
 result[result$pentype == "Finishing", "countdown"][c(1,2)] <- 1
 result[result$pentype == "Finishing", "Sfinish"][1] <- 8
@@ -64,7 +64,7 @@ stopifnot(is.null(ob))
 ## Pens have countdown 0, and they are empty. We still want to
 ## schedule slaughter events because we can't know the absolute number
 ## of animals in these pens
-result <- u0(node = TRUE, time = TRUE, npigs = TRUE)
+result <- create_u0(node = TRUE, time = TRUE, npigs = TRUE)
 result[result$pentype == "Finishing", "countdown"][c(1,2)] <- 0
 result <- clean_trajectory(result)
 ob <- finishing_slaughter(result = result)$events
@@ -72,7 +72,7 @@ stopifnot(nrow(ob) == 30L)
 stopifnot(ob$proportion == 1)
 
 ## Check what happens if we traverse the time from 15 days to 0 days
-result <- u0(node = TRUE, time = TRUE, npigs = TRUE, test_indicator = TRUE, result_indicator = TRUE, cleaning_indicator = TRUE, Icum = TRUE)
+result <- create_u0(node = TRUE, time = TRUE, npigs = TRUE, test_indicator = TRUE, result_indicator = TRUE, cleaning_indicator = TRUE, Icum = TRUE)
 result <- clean_trajectory(result)
 index <- which(result$pentype == "Finishing")[c(1, 2)]
 result[index, "countdown"] <- 15

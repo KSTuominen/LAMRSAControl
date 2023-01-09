@@ -1,5 +1,5 @@
 library(LAMRSAControl)
-result <- u0(node = TRUE, time = TRUE, npigs = TRUE)
+result <- create_u0(node = TRUE, time = TRUE, npigs = TRUE)
 
 result[result$pentype == "Farrowing", "countdown"][1:2] <- 0
 result[result$pentype == "Farrowing", "Ssows"][1:2] <- 1
@@ -29,7 +29,7 @@ stopifnot(identical(ob, ex))
 ## weaning(result, residual, events = NULL, fraction_to_gilt = 0)$events
 
 ## With 24 sowss
-result <- u0(node = TRUE, time = TRUE)
+result <- create_u0(node = TRUE, time = TRUE)
 
 result[result$pentype == "Farrowing", "countdown"][1:24] <- 0
 result[result$pentype == "Farrowing", "Ssows"][1:24] <- 1
@@ -55,7 +55,7 @@ stopifnot(ex)
 
 ## ## We can't do this:
 ## ## With 48 sows in 2 sections
-## result <- u0(node = TRUE, time = TRUE)
+## result <- create_u0(node = TRUE, time = TRUE)
 ## result[result$pentype == "Farrowing", "countdown"][c(1:24, 27:52)] <- 0
 ## result[result$pentype == "Farrowing", "Ssows"][c(1:24, 27:52)] <- 1
 ## result[result$pentype == "Farrowing", "Spiglets"][c(1:24, 27:52)] <- 15

@@ -1,5 +1,5 @@
 library(LAMRSAControl)
-result <- u0(node = TRUE, time = TRUE, npigs = TRUE)
+result <- create_u0(node = TRUE, time = TRUE, npigs = TRUE)
 result <- clean_trajectory(result)
 
 ## Make sure we get some empty pens

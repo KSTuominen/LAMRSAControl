@@ -1,7 +1,7 @@
 library(LAMRSAControl)
 
 ## Timers set to 34 and add some pigs
-result <- u0(node = TRUE, time = TRUE)
+result <- create_u0(node = TRUE, time = TRUE)
 result[result$pentype == "Farrowing", "countdown"][1:22] <- 34
 result[result$pentype == "Farrowing", "Spiglets"][1:22] <- 13
 

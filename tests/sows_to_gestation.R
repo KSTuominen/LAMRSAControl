@@ -1,7 +1,7 @@
 library(LAMRSAControl)
 
 ## Timers set to 14
-result <- u0(node = TRUE, time = TRUE, npigs = TRUE)
+result <- create_u0(node = TRUE, time = TRUE, npigs = TRUE)
 
 result[result$pentype == "Sow breeding", "countdown"][1] <- 0
 result[result$pentype == "Sow breeding", "Ssows"][1] <- 8
