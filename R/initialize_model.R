@@ -126,7 +126,7 @@ MRSA_model <- function(Nt=0.8705506,
 
     E <- select_matrix(compartments)
     N <- shift_matrix(compartments)
-    u0 <- u0(node = TRUE,
+    u0 <- create_u0(node = TRUE,
              test_indicator = TRUE,
              result_indicator = TRUE,
              cleaning_indicator = TRUE,

@@ -1,6 +1,6 @@
 library(LAMRSAControl)
 
-result <- u0(node = TRUE, time = TRUE, npigs = TRUE)
+result <- create_u0(node = TRUE, time = TRUE, npigs = TRUE)
 
 ## add some grower pigs
 result[result$pentype == "Growing", "countdown"][1:26] <- 0
@@ -25,7 +25,7 @@ stopifnot(all(ob$result[ob$result$pentype == "Growing buffer", "countdown"][1:3]
 stopifnot(all(ob$result[ob$result$pentype == "Finishing", "countdown"][1:26] == timers("Finishing")))
 
 ## What happens when the finisher barn is full?
-result <- u0(node = TRUE, time = TRUE, npigs = TRUE)
+result <- create_u0(node = TRUE, time = TRUE, npigs = TRUE)
 ## add some grower pigs
 result[result$pentype == "Growing", "countdown"][1:26] <- 0
 result[result$pentype == "Growing", "Sgrowers"][1:26] <- 12
@@ -43,7 +43,7 @@ ex <- "all\\(!is.na\\(empty.finishing.pens\\)\\) is not TRUE"
 stopifnot(length(grep(ex, ob)) == 1L)
 
 ## But it should work if there is 1 section free
-result <- u0(node = TRUE, time = TRUE, npigs = TRUE)
+result <- create_u0(node = TRUE, time = TRUE, npigs = TRUE)
 ## add some grower pigs
 result[result$pentype == "Growing", "countdown"][1:26] <- 0
 result[result$pentype == "Growing", "Sgrowers"][1:26] <- 12
@@ -63,7 +63,7 @@ stopifnot(nrow(ob$events) == 26)
 ## pens then are needed? We expect them not to be available since we
 ## want a completly empty room:
 ## But it should work if there is 1 section free
-result <- u0(node = TRUE, time = TRUE, npigs = TRUE)
+result <- create_u0(node = TRUE, time = TRUE, npigs = TRUE)
 ## add some grower pigs
 result[result$pentype == "Growing", "countdown"][1:26] <- 0
 result[result$pentype == "Growing", "Sgrowers"][1:26] <- 12
@@ -86,7 +86,7 @@ stopifnot(length(grep(ex, ob)) == 1L)
 ## days because we don't know that those pens were empty. This causes
 ## the risk of a room being interpreted as empty when it needs
 ## downtime before being available.
-result <- u0(node = TRUE, time = TRUE, npigs = TRUE)
+result <- create_u0(node = TRUE, time = TRUE, npigs = TRUE)
 ## add some grower pigs
 result[result$pentype == "Growing", "countdown"][1:26] <- 0
 result[result$pentype == "Growing", "Sgrowers"][1:26] <- 12

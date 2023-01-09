@@ -133,7 +133,7 @@ pen_polygons <- function(width,
 ##' @return A polygon object
 farm_polygons <- function(result = NULL) {
     ## Get the pens
-    farm <- u0(node = TRUE)
+    farm <- create_u0(node = TRUE)
     levels <- farm[, c("section", "pentype")]
     levels <- levels[!duplicated(levels), ]
 

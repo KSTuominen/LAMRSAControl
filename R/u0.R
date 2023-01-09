@@ -36,7 +36,7 @@
 #'
 #' @return dataframe of herd structure
 #' @export
-u0 <- function(sow.breeding.pens.persection = 10,
+create_u0 <- function(sow.breeding.pens.persection = 10,
                sow.breeding.pens.section = 1,
 
                gilt.breeding.pens.persection = 8,

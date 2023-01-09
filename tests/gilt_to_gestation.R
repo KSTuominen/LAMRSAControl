@@ -1,7 +1,7 @@
 library(LAMRSAControl)
 
 ## Timers set to 14
-result <- u0(node = TRUE, time = TRUE, npigs = TRUE)
+result <- create_u0(node = TRUE, time = TRUE, npigs = TRUE)
 
 result[result$pentype == "Gilt breeding", "countdown"][1] <- 0
 result[result$pentype == "Gilt breeding", "Sgilts"][1] <- 8
@@ -19,7 +19,7 @@ ob <- gilt_to_gestation(result, residual)$events
 stopifnot(identical(length(table(ob$dest)), 2L))
 
 ## Check that the sampling fix works:
-result <- u0(node = TRUE, time = TRUE, npigs = TRUE)
+result <- create_u0(node = TRUE, time = TRUE, npigs = TRUE)
 result[result$node == 16, "Sgilts"] <- 1
 result[result$node == 16, "countdown"] <- 0
 result[result$node == 17, "Sgilts"] <- 1
