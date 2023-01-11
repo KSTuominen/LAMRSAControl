@@ -27,7 +27,7 @@ released version can be installed from
 The package can be installed directly from Github by using the
 `remotes` package:
 
-```
+``` R
 library(remotes)
 install_github("KSTuominen/LAMRSAControl")
 ```
@@ -37,8 +37,8 @@ See the vignette for more examples of running the model. To read the
 vignette do the following:
 
 ``` R
-library('LAMRSAControl')
-vignette('LAMRSAControl')
+library(LAMRSAControl)
+vignette("LAMRSAControl")
 ```
 
 ### Authors
