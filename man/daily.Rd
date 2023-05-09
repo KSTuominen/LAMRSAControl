@@ -11,7 +11,8 @@ daily(
   crossfostering_day = 34,
   crossfostering_proportion = 0.1,
   finisher_mixing_proportion = 1,
-  biweekly = FALSE
+  biweekly = FALSE,
+  gilt_introduction = 21
 )
 }
 \arguments{
@@ -33,6 +34,9 @@ and does the crossfostering on that day.}
 means that sows only farrow every second week and that at the
 beginning of the model only 10 groups of gilts are added to
 the model in 14 day increments.}
+
+\item{gilt_introduction}{Change how many times gilts are introduced
+(based on gilt_interval). Affects the end herd size.}
 }
 \value{
 An object for the day

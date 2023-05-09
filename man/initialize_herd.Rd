@@ -4,7 +4,13 @@
 \alias{initialize_herd}
 \title{initialize_herd}
 \usage{
-initialize_herd(result, residual = NULL, events = NULL, biweekly = FALSE)
+initialize_herd(
+  result,
+  residual = NULL,
+  events = NULL,
+  biweekly = FALSE,
+  gilt_introduction = 21
+)
 }
 \arguments{
 \item{result}{The result from the previous day or modified result
@@ -21,6 +27,9 @@ generated for this day}
 means that sows only farrow every second week and that at the
 beginning of the model only 10 groups of gilts are added to
 the model in 14 day increments.}
+
+\item{gilt_introduction}{Change how many times gilts are introduced
+(based on gilt_interval). Affects the end herd size.}
 }
 \value{
 A list of the (modified) result, the new residual and the

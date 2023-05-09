@@ -14,14 +14,17 @@
 ##'     means that sows only farrow every second week and that at the
 ##'     beginning of the model only 10 groups of gilts are added to
 ##'     the model in 14 day increments.
+##' @param gilt_introduction Change how many times gilts are introduced
+##' (based on gilt_interval). Affects the end herd size.
 ##' @return A list of the (modified) result, the new residual and the
 ##'     new events appended to the events you fed to the function
 ##' @export
 initialize_herd <- function(result,
                             residual = NULL,
                             events = NULL,
-                            biweekly = FALSE) {
-    gilt_introduction <- 21
+                            biweekly = FALSE,
+                            gilt_introduction = 21) {
+    gilt_introduction <- gilt_introduction
     gilt_interval <- 7
     if (biweekly) {
         gilt_introduction <- 10

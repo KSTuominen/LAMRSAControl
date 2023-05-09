@@ -14,6 +14,8 @@
 ##'     means that sows only farrow every second week and that at the
 ##'     beginning of the model only 10 groups of gilts are added to
 ##'     the model in 14 day increments.
+##' @param gilt_introduction Change how many times gilts are introduced
+##' (based on gilt_interval). Affects the end herd size.
 ##' @export
 ##' @importFrom SimInf SimInf_events
 ##' @importFrom SimInf trajectory
@@ -25,8 +27,10 @@ daily <- function(result,
                   crossfostering_day = 34,
                   crossfostering_proportion = 0.1,
                   finisher_mixing_proportion = 1,
-                  biweekly = FALSE) {
+                  biweekly = FALSE,
+                  gilt_introduction = 21) {
     ## step the counter
+    stopifnot(gilt_introduction <= 21)
     result$countdown <- as.integer(ifelse(result$countdown == 0 | result$countdown == 99999,
                                           result$countdown,
                                           result$countdown - 1))
@@ -50,7 +54,8 @@ daily <- function(result,
     ## Initialize the herd with gilts to breeding
     ob <- initialize_herd(result,
                           residual,
-                          biweekly = biweekly)
+                          biweekly = biweekly,
+                          gilt_introduction = gilt_introduction)
 
     ob <- abortion(ob$result,
                    ob$residual,
