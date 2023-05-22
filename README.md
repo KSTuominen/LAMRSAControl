@@ -1,6 +1,6 @@
 ## LAMRSAControl - Package for modelling the spread and control measures against LA-MRSA in a pig herd
 
-This repository contains the code for a stochastic compartment model
+This repository contains the code used in the manuscript "Assessment of control measures against livestock-associated methicillin-resistant _Staphylococcus aureus_ in a farrow-to-finish pig herd using infectious disease modelling" by Tuominen et al. (2023; https://doi.org/10.1016/j.animal.2023.100840). It is a stochastic compartment model
 of a farrow-to-finish pig herd and examples of using the model to
 simulate the spread of livestock-associated methicillin-resistant
 *Staphylococcus aureus* (LA-MRSA) in the herd. The package also
